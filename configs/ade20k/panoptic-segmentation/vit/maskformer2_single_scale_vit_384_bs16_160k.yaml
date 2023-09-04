@@ -1,0 +1,24 @@
+_BASE_: ../maskformer2_R50_bs16_160k.yaml
+MODEL:
+  BACKBONE:
+    NAME: "VisionTransformer"
+  VIT:
+    PRETRAINED_IMG_SIZE: 384
+    PATCH_SIZE: 16
+    OUT_INDICES: [12]
+    OUT_FEATURES: ["res2"]
+    DROP_PATH_RATE: 0.1
+    FROZEN_STAGE: -1
+    WEIGHTS: "pretrained_weights/B_16-i21k-300ep-lr_0.001-aug_medium1-wd_0.1-do_0.0-sd_0.0--imagenet2012-steps_20k-lr_0.01-res_384.npz"
+  SEM_SEG_HEAD:
+    IN_FEATURES: ["res2"]
+    DEFORMABLE_TRANSFORMER_ENCODER_IN_FEATURES: ["res2"]
+    NUM_FEATURE_LEVELS: 1
+  WEIGHTS: None
+  PIXEL_MEAN: [123.675, 116.280, 103.530]
+  PIXEL_STD: [58.395, 57.120, 57.375]
+
+SOLVER:
+  IMS_PER_BATCH: 16
+  BASE_LR: 0.00016
+  WEIGHT_DECAY: 0.1

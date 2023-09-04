@@ -1,0 +1,6 @@
+_BASE_: ./maskformer2_vit_384_bs16_160k.yaml
+MODEL:
+  BACKBONE:
+    NAME: "MultiScaleViT"
+  VIT:
+    OUTPUT_REVOLUTION_RATIOS: [4, 2, 1, 0.5]

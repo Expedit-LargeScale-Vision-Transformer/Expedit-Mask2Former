@@ -1,0 +1,33 @@
+_BASE_: maskformer2_vit_base_bs16_50ep.yaml
+MODEL:
+  BACKBONE:
+    NAME: "ConditionalViT"
+  VIT:
+    OUTPUT_REVOLUTION_RATIOS: [1, 1, 1, 1]
+    POOL:
+      POOLING_START_LAYER: 1
+      CANDIDATE_POOLING_LAYERS: [5, 7, 9]
+      LAYERWISE_POOLING_RATES: [30, 40, 30]
+      SIM_SCORE_THRS: [0., 0., 0.]
+      SIMILARITY_THR: 0.9
+      UPDATE_STEP: 1000
+      NUM_BLOCK: 1
+      BLOCK_TYPES: ["ssn"]
+      ITERS: 5
+      NUM_SPIXELS: [400, 256, 144]
+      RECON_LOSS_RATIO: 1.15
+      RECON_LOSS_THRS: [0.04, 0.03, 0.02]
+      NUM_SPIXELS_RATES: [30, 40, 30]
+      THR_UPDATABLE: False
+      THR_UPDATE_CYCLE: 1000
+      TL:
+        MULTI_MODE: 2
+        NUM_TOKENS: [8, 4]
+        SCALES: [4, 16]
+        MULTI_STAGE: 1
+    UNPOOL:
+      TYPE: "TSA"
+      REFINED: False
+      RESIDUAL: False
+      K: 3
+  

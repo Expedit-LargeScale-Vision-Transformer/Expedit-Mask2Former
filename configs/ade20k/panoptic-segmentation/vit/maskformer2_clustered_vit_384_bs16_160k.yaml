@@ -1,0 +1,20 @@
+_BASE_: ./maskformer2_single_scale_vit_384_bs16_160k.yaml
+MODEL:
+  BACKBONE:
+    NAME: "ClusteredViT"
+  VIT:
+    POOL:
+      LAYER: 9
+      BLOCK_TYPE: "ssn"
+      ITERS: 5
+      NUM_SPIXEL: 1024
+      TL:
+        MULTI_MODE: -1
+        NUM_TOKENS: [4, 4]
+        SCALES: [4, 16]
+        MULTI_STAGE: 0
+    UNPOOL:
+      TYPE: "TSA"
+      REFINED: False
+      RESIDUAL: False
+      K: 5

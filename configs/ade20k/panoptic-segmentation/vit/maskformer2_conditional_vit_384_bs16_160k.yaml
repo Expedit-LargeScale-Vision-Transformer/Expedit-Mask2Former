@@ -1,0 +1,31 @@
+_BASE_: ./maskformer2_single_scale_vit_384_bs16_160k.yaml
+MODEL:
+  BACKBONE:
+    NAME: "ConditionalViT"
+  VIT:
+    POOL:
+      POOLING_START_LAYER: 1
+      CANDIDATE_POOLING_LAYERS: [7, 8, 9, 10]
+      LAYERWISE_POOLING_RATES: [25, 25, 25, 25]
+      SIM_SCORE_THRS: [0.02, 0.015, 0.01, 0.]
+      SIMILARITY_THR: 0.9
+      UPDATE_STEP: 100
+      NUM_BLOCK: 1
+      BLOCK_TYPE: "ssn"
+      ITERS: 5
+      NUM_SPIXELS: [400, 324, 256, 196, 144]
+      RECON_LOSS_RATIO: 1.15
+      RECON_LOSS_THRS: [0.02, 0.025, 0.03, 0.04, 0.05]
+      NUM_SPIXELS_RATES: [20, 20, 20, 20, 20]
+      THR_UPDATABLE: False
+      THR_UPDATE_CYCLE: 100
+      TL:
+        MULTI_MODE: 2
+        NUM_TOKENS: [8, 4]
+        SCALES: [4, 16]
+        MULTI_STAGE: 1
+    UNPOOL:
+      TYPE: "TSA"
+      REFINED: False
+      RESIDUAL: False
+      K: 3
